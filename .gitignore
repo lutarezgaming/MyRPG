@@ -1,1 +1,5 @@
-test.html
+node_modules
+release-builds
+Thumbs.db
+package-lock.json
+*.zip

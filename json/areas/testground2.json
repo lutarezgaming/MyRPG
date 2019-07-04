@@ -1,0 +1,21 @@
+{
+    "area2": {
+      "map": "json/maps/area2.json",
+      "enemies": [],
+      "npc": []
+    },
+    "cave": {
+      "map": "json/maps/cave.json",
+      "enemies": [],
+      "npc": [],
+      "shader": true
+    },
+    "assets": {
+      "image": [
+        {
+          "key": "terrain-1",
+          "url": "assets/tilesets/terrain-1.png"
+        }
+      ]
+    }
+}
