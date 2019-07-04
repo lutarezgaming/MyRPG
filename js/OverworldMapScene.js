@@ -127,6 +127,8 @@ class OverworldMapScene extends Phaser.Scene{
             this.keyDown.reset();
             this.keyRight.reset();
 
+            if (state == null) return;
+
 
             if (state == "won") { // if the won state is passed, than call the fightEnd function
                 this.fightEnd(this.fightingEnemie);
