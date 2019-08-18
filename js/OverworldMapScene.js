@@ -31,7 +31,6 @@ class OverworldMapScene extends Phaser.Scene{
         this.subAreaName = null; // init the subAreaName variable
         this.isloading = true; // init and set loading variable to true
         this.isWalking = false; // init walking variable
-        this.isTalking = false;
         this.activeEnemies = []; // init activeEnemie Array
         this.cachedEnemies= {}; // init the cachedEnemie Object
         this.activeNPC = [];
@@ -52,7 +51,6 @@ class OverworldMapScene extends Phaser.Scene{
         this.player = this.add.sprite(32,32,'phaserguy').setOrigin(-0.05, 0.3).setDepth(1);
         this.player.name = "Player"; // set name to 'Player' TODO: wirds gebraucht?
         this.cameras.main.startFollow(this.player); // set the camera following to the player
-
 
         // set the movement hotkeys
         this.generateMoveKeys();
@@ -129,7 +127,6 @@ class OverworldMapScene extends Phaser.Scene{
 
             if (state == null) return;
 
-
             if (state == "won") { // if the won state is passed, than call the fightEnd function
                 this.fightEnd(this.fightingEnemie);
             }
@@ -160,7 +157,7 @@ class OverworldMapScene extends Phaser.Scene{
                 this.blink(enemie, resumeTween); // start the blink tween
             }
 
-            if (state.keyChanged)
+            if (state == "keyChanged")
                 this.generateMoveKeys();
         });
     }
@@ -255,7 +252,7 @@ class OverworldMapScene extends Phaser.Scene{
         this.fightingEnemie = null; // Reset the reference
 	}
 
-
+//#region Player moving
     /**
      * Move the player
      * @param {Number} x the distance the player on the x-axis move in px
@@ -398,6 +395,7 @@ class OverworldMapScene extends Phaser.Scene{
             this.fadeCamera(1, 150, () => {this.isloading = false});
     }
 
+//#endregion
 
 //#region Loader
     /**
@@ -799,6 +797,7 @@ class OverworldMapScene extends Phaser.Scene{
     }
 
 
+//#region Enemie move
     /**
      * Calculate the pause between the movements and start the movement afterwards
      * @param {Phaser.GameObjects.Sprite} enemie The enemie sprite which should move
@@ -970,6 +969,7 @@ class OverworldMapScene extends Phaser.Scene{
         this.finder.calculate();
 
     }
+//#endregion
 
     npcInteraction() {
         if (!this.player.anims.currentAnim) return;
@@ -996,9 +996,22 @@ class OverworldMapScene extends Phaser.Scene{
             if (newY >= npc.y+32 || newX+32 <= npc.x || newY+32 <= npc.y || newX >= npc.x+32) {
                 continue;
             }
-            console.log(npc.name);
+
+            console.log(npc);
+            this.scene.pause();
+            this.scene.launch("OverworldInteractionScene", {text: [
+                {text: "Hi!"},
+                {text: "This is my new game."},
+                {question: "Do you like it?", answers: [
+                    { choose: "yes", next: "like_yes" },
+                    { choose: "no", next: "like_no"}
+                ]}
+            ]});
+            /*console.log(npc.name);
             this.tweens.pauseAll();
-            console.log(this.tweens);
+
+            this.dialog.openBox("Test");
+            console.log(this.tweens);*/
             return;
         }
         
